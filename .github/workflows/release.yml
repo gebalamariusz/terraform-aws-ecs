@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body: |
+            ## Usage
+
+            ```hcl
+            module "ecs" {
+              source  = "gebalamariusz/ecs/aws"
+              version = "${{ github.ref_name }}"
+
+              name                 = "my-app"
+              environment          = "prod"
+              vpc_id               = "vpc-xxx"
+              instance_profile_arn = "arn:aws:iam::xxx:instance-profile/xxx"
+
+              capacity_providers = {
+                "default" = {
+                  instance_type      = "t3.medium"
+                  security_group_ids = ["sg-xxx"]
+                  subnet_ids         = ["subnet-xxx"]
+                  min_size           = 1
+                  max_size           = 3
+                  desired_capacity   = 2
+                }
+              }
+            }
+            ```
+
+            ## Documentation
+
+            See [README.md](https://github.com/gebalamariusz/terraform-aws-ecs/blob/${{ github.ref_name }}/README.md) for full documentation.
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
