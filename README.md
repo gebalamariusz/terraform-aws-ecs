@@ -122,7 +122,6 @@ module "ecs" {
 |------|-------------|------|---------|:--------:|
 | name | Name of the ECS cluster | `string` | n/a | yes |
 | environment | Environment (e.g., dev, staging, prod) | `string` | n/a | yes |
-| vpc_id | VPC ID where ECS instances will be deployed | `string` | n/a | yes |
 | instance_profile_arn | ARN of the IAM instance profile for ECS instances | `string` | n/a | yes |
 | capacity_providers | Map of capacity providers to create | `map(object)` | n/a | yes |
 | container_insights | Enable CloudWatch Container Insights | `bool` | `true` | no |

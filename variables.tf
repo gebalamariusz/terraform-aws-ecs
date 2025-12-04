@@ -12,11 +12,6 @@ variable "environment" {
   type        = string
 }
 
-variable "vpc_id" {
-  description = "VPC ID where ECS instances will be deployed"
-  type        = string
-}
-
 variable "instance_profile_arn" {
   description = "ARN of the IAM instance profile for ECS instances"
   type        = string
