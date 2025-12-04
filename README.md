@@ -24,7 +24,7 @@ This module is designed to work seamlessly with [terraform-aws-vpc](https://gith
 
 ### Basic usage with single capacity provider
 
-\`\`\`hcl
+```hcl
 module "ecs" {
   source  = "gebalamariusz/ecs/aws"
   version = "~> 1.0"
@@ -48,11 +48,11 @@ module "ecs" {
 
   tags = var.tags
 }
-\`\`\`
+```
 
 ### Jenkins-style setup with separate controller and build capacity
 
-\`\`\`hcl
+```hcl
 module "ecs" {
   source  = "gebalamariusz/ecs/aws"
   version = "~> 1.0"
@@ -84,11 +84,11 @@ module "ecs" {
 
   tags = var.tags
 }
-\`\`\`
+```
 
 ### With managed scaling (auto-scale based on ECS demand)
 
-\`\`\`hcl
+```hcl
 module "ecs" {
   source  = "gebalamariusz/ecs/aws"
   version = "~> 1.0"
@@ -114,32 +114,32 @@ module "ecs" {
 
   tags = var.tags
 }
-\`\`\`
+```
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| name | Name of the ECS cluster | \`string\` | n/a | yes |
-| environment | Environment (e.g., dev, staging, prod) | \`string\` | n/a | yes |
-| vpc_id | VPC ID where ECS instances will be deployed | \`string\` | n/a | yes |
-| instance_profile_arn | ARN of the IAM instance profile for ECS instances | \`string\` | n/a | yes |
-| capacity_providers | Map of capacity providers to create | \`map(object)\` | n/a | yes |
-| container_insights | Enable CloudWatch Container Insights | \`bool\` | \`true\` | no |
-| tags | Additional tags for all resources | \`map(string)\` | \`{}\` | no |
+| name | Name of the ECS cluster | `string` | n/a | yes |
+| environment | Environment (e.g., dev, staging, prod) | `string` | n/a | yes |
+| vpc_id | VPC ID where ECS instances will be deployed | `string` | n/a | yes |
+| instance_profile_arn | ARN of the IAM instance profile for ECS instances | `string` | n/a | yes |
+| capacity_providers | Map of capacity providers to create | `map(object)` | n/a | yes |
+| container_insights | Enable CloudWatch Container Insights | `bool` | `true` | no |
+| tags | Additional tags for all resources | `map(string)` | `{}` | no |
 
 ### Capacity Provider Object
 
 | Attribute | Description | Type | Default |
 |-----------|-------------|------|---------|
-| instance_type | EC2 instance type | \`string\` | n/a |
-| security_group_ids | List of security group IDs | \`list(string)\` | n/a |
-| subnet_ids | List of subnet IDs for ASG | \`list(string)\` | n/a |
-| min_size | Minimum ASG size | \`number\` | \`0\` |
-| max_size | Maximum ASG size | \`number\` | \`1\` |
-| desired_capacity | Desired ASG capacity | \`number\` | \`1\` |
-| managed_scaling | Enable ECS managed scaling | \`bool\` | \`false\` |
-| target_capacity | Target capacity percentage for managed scaling | \`number\` | \`100\` |
+| instance_type | EC2 instance type | `string` | n/a |
+| security_group_ids | List of security group IDs | `list(string)` | n/a |
+| subnet_ids | List of subnet IDs for ASG | `list(string)` | n/a |
+| min_size | Minimum ASG size | `number` | `0` |
+| max_size | Maximum ASG size | `number` | `1` |
+| desired_capacity | Desired ASG capacity | `number` | `1` |
+| managed_scaling | Enable ECS managed scaling | `bool` | `false` |
+| target_capacity | Target capacity percentage for managed scaling | `number` | `100` |
 
 ## Outputs
 
@@ -156,9 +156,9 @@ module "ecs" {
 
 ## Using Placement Constraints
 
-Each capacity provider tags its instances with \`CapacityProvider = <key>\`. Use this in ECS task definitions:
+Each capacity provider tags its instances with `CapacityProvider = <key>`. Use this in ECS task definitions:
 
-\`\`\`hcl
+```hcl
 resource "aws_ecs_task_definition" "controller" {
   # ...
 
@@ -167,7 +167,7 @@ resource "aws_ecs_task_definition" "controller" {
     expression = "attribute:CapacityProvider == controller"
   }
 }
-\`\`\`
+```
 
 ## License
 
